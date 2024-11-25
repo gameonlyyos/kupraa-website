@@ -1,425 +1,174 @@
 <!DOCTYPE html>
 <html>
+  <meta charset="UTF-8" /><meta
+    content="width=device-width, initial-scale=1, user-scalable=1, minimum-scale=1, maximum-scale=5"
+    name="viewport"
+  /><meta content="IE=edge" http-equiv="X-UA-Compatible" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;700&display=swap"
+    rel="stylesheet"
+  />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Nerko+One&display=swap"
+    rel="stylesheet"
+  />
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.all.min.js"></script>
+  <script src="https://unpkg.com/typeit@8.7.0/dist/index.umd.js"></script>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+  <script
+    src="https://kit.fontawesome.com/4f3ce16e3e.js"
+    crossorigin="anonymous"
+  ></script>
+
   <head>
-    <title>BreakHeart</title>
-    <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-
-      body {
-        background: linear-gradient(45deg, #ff6b6b, #ff8585, #ff6b6b);
-        background-size: 400% 400%;
-        animation: gradientBG 15s ease infinite;
-        transition: all 1s;
-        overflow: hidden;
-        min-height: 100vh;
-      }
-
-      .heart-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        position: relative;
-        z-index: 2;
-      }
-
-      .heart {
-        font-size: 220px;
-        cursor: pointer;
-        transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-        text-shadow: 0 0 30px rgba(255, 0, 0, 0.8),
-          0 0 60px rgba(255, 0, 0, 0.4), 0 0 90px rgba(255, 0, 0, 0.2),
-          0 0 120px rgba(255, 0, 0, 0.1);
-        animation: heartbeat 1.5s infinite,
-          floatingHeart 3s ease-in-out infinite;
-      }
-
-      @keyframes heartbeat {
-        0% {
-          transform: scale(1);
-          filter: brightness(1);
-        }
-        50% {
-          transform: scale(1.15);
-          filter: brightness(1.2);
-        }
-        100% {
-          transform: scale(1);
-          filter: brightness(1);
-        }
-      }
-
-      @keyframes floatingHeart {
-        0%,
-        100% {
-          transform: translateY(0);
-        }
-        50% {
-          transform: translateY(-20px);
-        }
-      }
-
-      .heart:hover {
-        transform: scale(1.3) rotate(5deg);
-        text-shadow: 0 0 40px rgba(255, 0, 0, 1);
-      }
-
-      .broken {
-        animation: heartBreak 3s forwards;
-        filter: saturate(0.5);
-      }
-
-      @keyframes heartBreak {
-        0% {
-          transform: scale(1);
-          opacity: 1;
-        }
-        10% {
-          transform: scale(1.8) rotate(15deg);
-        }
-        20% {
-          transform: scale(1.6) rotate(-25deg);
-        }
-        30% {
-          transform: scale(1.7) rotate(25deg);
-        }
-        40% {
-          transform: scale(1.5) rotate(-20deg);
-        }
-        50% {
-          transform: scale(1.6);
-        }
-        60% {
-          transform: scale(1.4) rotate(15deg);
-        }
-        70% {
-          transform: scale(1.5) rotate(-15deg);
-        }
-        100% {
-          transform: scale(0.8);
-          opacity: 0.4;
-          filter: grayscale(100%) blur(4px) brightness(0.7);
-        }
-      }
-
-      .sad-bg {
-        background: linear-gradient(to bottom, #1a1a1a, #000000);
-        animation: darkening 4s forwards;
-      }
-
-      @keyframes darkening {
-        from {
-          filter: brightness(1);
-        }
-        to {
-          filter: brightness(0.5);
-        }
-      }
-
-      .rain-container {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        pointer-events: none;
-        z-index: 1;
-        overflow: hidden;
-      }
-
-      .rain-drop {
-        position: absolute;
-        width: 2px;
-        height: 15px;
-        background: linear-gradient(
-          to bottom,
-          transparent,
-          rgba(200, 200, 255, 0.8),
-          transparent
-        );
-        animation: rain linear infinite;
-      }
-
-      @keyframes rain {
-        0% {
-          transform: translateY(-100%);
-        }
-        100% {
-          transform: translateY(100vh);
-        }
-      }
-
-      .splash {
-        position: fixed;
-        bottom: 0;
-        width: 6px;
-        height: 2px;
-        background: rgba(255, 255, 255, 0.5);
-        border-radius: 50%;
-        animation: splash 0.5s linear forwards;
-      }
-
-      @keyframes splash {
-        0% {
-          transform: scale(1);
-          opacity: 0.7;
-        }
-        100% {
-          transform: scale(3);
-          opacity: 0;
-        }
-      }
-
-      .fog {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: radial-gradient(
-          circle at 50% 50%,
-          rgba(255, 255, 255, 0.1),
-          rgba(0, 0, 0, 0.4)
-        );
-        pointer-events: none;
-        z-index: 1;
-        opacity: 0;
-        transition: opacity 3s;
-      }
-
-      .fog.show {
-        opacity: 0.7;
-      }
-
-      .lightning {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: white;
-        opacity: 0;
-        pointer-events: none;
-        z-index: 3;
-        filter: blur(5px);
-      }
-
-      .lightning-flash {
-        animation: lightning 1s ease-out;
-      }
-
-      @keyframes lightning {
-        0% {
-          opacity: 0;
-        }
-        10% {
-          opacity: 0.5;
-        }
-        15% {
-          opacity: 0.1;
-        }
-        20% {
-          opacity: 0.4;
-        }
-        25% {
-          opacity: 0;
-        }
-        30% {
-          opacity: 0.3;
-        }
-        100% {
-          opacity: 0;
-        }
-      }
-
-      .particles {
-        position: absolute;
-        width: 4px;
-        height: 4px;
-        background: rgba(255, 0, 0, 0.6);
-        border-radius: 50%;
-        pointer-events: none;
-      }
-    </style>
+    <title>Ga Kerasa Ya Kita Udah Selama Ini Lost Contact</title>
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="https://malasid.github.io/favicon.png"
+    />
+    <meta name="description" content="HTML Bucin Malas.id" />
   </head>
+  <style>
+    :root {
+      --ukuran-teks: 16px;
+      --gaya-font: "Nunito Sans", sans-serif;
+      --gaya-font3: "Nerko One", cursive;
+    }
+  </style>
   <body>
-    <div class="heart-container">
-      <div class="heart" onclick="breakHeart()">❤️</div>
+    <div class="rain"></div>
+    <!-- Ganti Audio di sini -->
+    <audio src="sad.mp3" id="linkmp3" class="sembunyi"></audio>
+
+    <div id="bodyblur"><img src="" id="wallpaper" /></div>
+
+    <div id="Content">
+      <div id="ftAwal">
+        <!-- Stiker Pembuka -->
+        <img src="heart.png" id="ftoAwal" />
+      </div>
+
+      <div id="loveIn">
+        <!-- Tombol LOVE --><label class="lovein">❤️</label>
+      </div>
+      <p id="ket">Sentuh LOVEnya!</p>
+
+      <div class="kumpulan">
+        <!-- Kumpulan Background -->
+        <img src="1.png" id="wallpaper1" />
+        <img src="2.png" id="wallpaper2" />
+        <img src="3.png" id="wallpaper3" />
+        <img src="4.png" id="wallpaper4" />
+        <img src="5.png" id="wallpaper5" />
+        <img src="6.png" id="wallpaper6" />
+        <img src="7.png" id="wallpaper7" />
+        <img src="8.png" id="wallpaper8" />
+
+        <!-- Foto/Stiker Akhir -->
+        <img src="heartbroken.png" id="ftoAkhir" />
+      </div>
+
+      <div>
+        <blockquote id="bq">
+          <p id="kalimat" style="text-align: center"></p>
+        </blockquote>
+      </div>
+
+      <!-- Tombol Kirim Pesan -->
+      <div id="Tombol">
+        <a id="By">&#128140; Balas</a>
+      </div>
     </div>
-    <div class="lightning"></div>
-    <div class="fog"></div>
-    <div class="rain-container"></div>
 
-    <audio id="sadSong">
-      <source src="sad.mp3" type="audio/mp3" />
-    </audio>
-
+    <!-- Jangan Edit Bagian Ini -->
     <script>
-      const heart = document.querySelector(".heart");
-      const audio = document.getElementById("sadSong");
-      const body = document.body;
-      let isHeartBroken = false;
-
-      // Preload audio dan set waktu awal
-      audio.load();
-      audio.currentTime = 41;
-
-      function createRainEffect(count) {
-        const container = document.querySelector(".rain-container");
-
-        // Bersihkan container terlebih dahulu
-        container.innerHTML = "";
-
-        // Buat tetesan hujan
-        for (let i = 0; i < count; i++) {
-          const drop = document.createElement("div");
-          drop.className = "rain-drop";
-
-          // Posisi random
-          drop.style.left = `${Math.random() * 100}%`;
-
-          // Kecepatan jatuh random
-          const duration = Math.random() * 0.5 + 0.7; // 0.7s to 1.2s
-          drop.style.animationDuration = `${duration}s`;
-
-          // Opacity random
-          drop.style.opacity = Math.random() * 0.3 + 0.2;
-
-          // Posisi awal random
-          drop.style.top = `${Math.random() * -100}%`;
-
-          // Tambahkan sedikit kemiringan
-          const angle = Math.random() * 3 + 2; // 2-5 derajat
-          drop.style.transform = `rotate(${angle}deg)`;
-
-          container.appendChild(drop);
-
-          // Daur ulang tetesan hujan
-          drop.addEventListener("animationend", () => {
-            // Reset posisi ke atas dengan posisi horizontal baru
-            drop.style.left = `${Math.random() * 100}%`;
-            drop.style.top = "-10px";
-
-            // Buat efek splash saat hujan mencapai bawah
-            createSplashAtPosition(parseFloat(drop.style.left));
-          });
+      const body = document.querySelector("body");
+      const swalst = Swal.mixin({
+        timer: 2500,
+        allowOutsideClick: false,
+        showConfirmButton: false,
+        timerProgressBar: true,
+        imageHeight: 90,
+      });
+      audio = new Audio("" + linkmp3.src);
+      audio.currentTime = 42;
+      ftganti = 0;
+      fungsi = 0;
+      fungsiAwal = 0;
+      function berjatuhan() {
+        const heart = document.createElement("div");
+        heart.className = "fas fa-heart-broken";
+        heart.style.left = Math.random() * 90 + "vw";
+        heart.style.animationDuration = Math.random() * 3 + 2 + "s";
+        body.appendChild(heart);
+      }
+      setInterval(function name(params) {
+        var heartArr = document.querySelectorAll(".fa-heart-broken");
+        if (heartArr.length > 100) {
+          heartArr[0].remove();
         }
+      }, 100);
+      Content.style = "opacity:1;margin-top:14vh";
+      const swals = Swal.mixin({
+        allowOutsideClick: false,
+        cancelButtonColor: "#FF0040",
+        imageHeight: 80,
+      });
+      const inip = [];
+      const iniwp = [];
+      iden = 1;
+      iniwp[1] = wallpaper1.src;
+      wallpaper.src = iniwp[1];
+      iniwp[2] = wallpaper2.src;
+      iniwp[3] = wallpaper3.src;
+      iniwp[4] = wallpaper4.src;
+      iniwp[5] = wallpaper5.src;
+      iniwp[6] = wallpaper6.src;
+      iniwp[7] = wallpaper7.src;
+      iniwp[8] = wallpaper8.src;
+
+      inip[1] = "ga kerasa ya kita udah<br>selama ini <i>lost contact</i> 💔";
+      inip[2] = "aku gatau kamu<br>buka ini atau engga 😔";
+      inip[3] = "tapi aku hanya<br>ingin mengatakan 🥺";
+      inip[4] = "terimakasih sudah<br>menemaniku selama ini 😢";
+      inip[5] = "aku sangat beruntung<br>bisa kenal denganmu 🙏";
+      inip[6] = "tapi jika menurutmu 😪";
+      inip[7] = "aku orang terburuk<br>yang kamu kenal 😭";
+      inip[8] =
+        "<span style='font-family:var(--gaya-font3);font-size:19px !important'>Aku minta maaf ツ 💝</span>";
+
+      totalPesan = 8; //Input total pesan (slide) di sini ya!
+
+      function mulaikonten() {
+        setTimeout(mulaitextsec, 100);
       }
 
-      function createSplashAtPosition(x) {
-        if (!isHeartBroken) return;
-
-        const splash = document.createElement("div");
-        splash.className = "splash";
-        splash.style.left = `${x}%`;
-        document.body.appendChild(splash);
-
-        // Hapus splash setelah animasi selesai
-        splash.addEventListener("animationend", () => splash.remove());
+      function mulaitextsec() {
+        wallpaper.style = "opacity:.7";
+        ftoAwal.style = "display:none";
+        Content.style = "opacity:1;margin-top:2vh;";
+        body.style = "background-color:var(--warna-bg)";
+        kalimat.style = "display:none";
+        setTimeout(ketik, 100);
       }
 
-      function createTimedLightningEffect() {
-        const lightning = document.querySelector(".lightning");
-
-        // Waktu kemunculan petir (dalam detik, relatif terhadap waktu mulai audio)
-        const lightningTimes = [44, 48, 52, 56]; // Sesuaikan dengan beat lagu
-
-        lightningTimes.forEach((time) => {
-          setTimeout(() => {
-            if (!isHeartBroken) return;
-
-            lightning.classList.add("lightning-flash");
-            setTimeout(() => {
-              lightning.classList.remove("lightning-flash");
-            }, 1000);
-          }, (time - 41) * 1000); // 41 adalah waktu mulai audio
-        });
-      }
-
-      function breakHeart() {
-        if (isHeartBroken) return;
-        isHeartBroken = true;
-
-        // Tambah efek partikel
-        createHeartParticles();
-
-        heart.textContent = "💔";
-        heart.classList.add("broken");
-        body.classList.add("sad-bg");
-        document.querySelector(".fog").classList.add("show");
-
-        // Tingkatkan jumlah tetesan hujan
-        createRainEffect(300); // Tambah jumlah tetesan
-
-        createTimedLightningEffect();
-        playEnhancedAudio();
-      }
-
-      function playEnhancedAudio() {
-        audio.currentTime = 41;
-        audio.volume = 0;
-
-        const fadeInDuration = 2000;
-        const startTime = Date.now();
-
-        const fadeIn = setInterval(() => {
-          const elapsed = Date.now() - startTime;
-          const progress = elapsed / fadeInDuration;
-
-          if (progress >= 1) {
-            audio.volume = 0.7;
-            clearInterval(fadeIn);
-          } else {
-            audio.volume = Math.pow(progress, 2) * 0.7;
-          }
-        }, 50);
-
-        audio
-          .play()
-          .catch((error) => console.log("Error playing audio:", error));
-      }
-
-      function createHeartParticles() {
-        const heartRect = heart.getBoundingClientRect();
-        const centerX = heartRect.left + heartRect.width / 2;
-        const centerY = heartRect.top + heartRect.height / 2;
-
-        for (let i = 0; i < 20; i++) {
-          const particle = document.createElement("div");
-          particle.className = "particles";
-          document.body.appendChild(particle);
-
-          const angle = Math.random() * Math.PI * 2;
-          const velocity = 5 + Math.random() * 5;
-          const startX = centerX;
-          const startY = centerY;
-
-          particle.style.left = startX + "px";
-          particle.style.top = startY + "px";
-
-          const animation = particle.animate(
-            [
-              { transform: "translate(0, 0)", opacity: 1 },
-              {
-                transform: `translate(${Math.cos(angle) * 200}px, ${
-                  Math.sin(angle) * 200
-                }px)`,
-                opacity: 0,
-              },
-            ],
-            {
-              duration: 1000 + Math.random() * 1000,
-              easing: "cubic-bezier(0.4, 0, 0.2, 1)",
-            }
-          );
-
-          animation.onfinish = () => particle.remove();
-        }
+      function waktumuncul() {
+        setTimeout(kalimatakhir, 4500);
+        setTimeout(kalimatakhir, 8500);
+        setTimeout(kalimatakhir, 12700);
+        setTimeout(kalimatakhir, 16800);
+        setTimeout(kalimatakhir, 20300);
+        setTimeout(kalimatakhir, 23900);
+        setTimeout(kalimatakhir, 27100);
+        setTimeout(kalimatakhir, 30300);
       }
     </script>
+    <script src="lostkontak.js"></script>
+    <!-- Sampai Sini -->
   </body>
 </html>
