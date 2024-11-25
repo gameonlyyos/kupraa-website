@@ -78,14 +78,14 @@ document.getElementById("By").onclick = function () {
 
 var i = 1;
 function defwp() {
-  wallpaper.style = "transform: scale(1)";
+  wallpaper.style = "transform: scale(1); object-fit: cover;";
 }
 function kalimatakhir() {
   if (iden >= 1) {
     if (iden % 2 == 0) {
-      wallpaper.style = "transform: scale(1)";
+      wallpaper.style = "transform: scale(1); object-fit: cover;";
     } else {
-      wallpaper.style = "transform: scale(1.5)";
+      wallpaper.style = "transform: scale(1.5); object-fit: cover;";
     }
     wallpaper.src = iniwp[iden];
   }
