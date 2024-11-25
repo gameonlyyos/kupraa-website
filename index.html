@@ -1,28 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DhLh</title>
-    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
-    <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            background-color: #1e1e2f;
-            font-family: 'Pacifico', cursive;
-            color: #f5f5f5;
-        }
-        h1 {
-            font-size: 8rem;
-            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
-        }
-    </style>
-</head>
-<body>
-    <h1>Nothing</h1>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Yung Kai - blue 💙</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <div class="main-container">
+      <h1 class="title">Yung Kai - blue 💙</h1>
+
+      <div class="container">
+        <div class="video-wrapper">
+          <video id="myVideo">
+            <source src="1125.mp4" type="video/mp4" />
+            Browser Anda tidak mendukung tag video.
+          </video>
+
+          <div class="video-controls">
+            <div class="progress-bar">
+              <div class="progress"></div>
+            </div>
+
+            <div class="controls-buttons">
+              <button id="playBtn" class="control-btn">
+                <i class="fas fa-play"></i>
+              </button>
+
+              <div class="time">
+                <span id="currentTime">0:00</span>
+                <span>/</span>
+                <span id="duration">0:00</span>
+              </div>
+
+              <div class="volume-container">
+                <button id="muteBtn" class="control-btn">
+                  <i class="fas fa-volume-up"></i>
+                </button>
+                <input
+                  type="range"
+                  id="volumeSlider"
+                  min="0"
+                  max="1"
+                  step="0.1"
+                  value="1"
+                />
+              </div>
+
+              <button id="fullscreenBtn" class="control-btn">
+                <i class="fas fa-expand"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bottom-controls">
+        <button id="bottomPlayBtn" class="bottom-play-btn">
+          <i class="fas fa-play"></i>
+          <span>Play Video</span>
+        </button>
+      </div>
+
+      <footer class="credits">
+        <p>
+          Created with 💙 by
+          <a href="https://github.com/kupraa" target="_blank">Kupraa</a>
+        </p>
+      </footer>
+    </div>
+    <script src="script.js"></script>
+  </body>
 </html>
