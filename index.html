@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Animasi Love Patah dengan Lagu</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        background: linear-gradient(45deg, #ff6b6b, #ff8585, #ff6b6b);
+        background-size: 400% 400%;
+        animation: gradientBG 15s ease infinite;
+        transition: all 1s;
+        overflow: hidden;
+        min-height: 100vh;
+      }
+
+      .heart-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        position: relative;
+        z-index: 2;
+      }
+
+      .heart {
+        font-size: 220px;
+        cursor: pointer;
+        transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        text-shadow: 0 0 30px rgba(255, 0, 0, 0.8),
+          0 0 60px rgba(255, 0, 0, 0.4), 0 0 90px rgba(255, 0, 0, 0.2),
+          0 0 120px rgba(255, 0, 0, 0.1);
+        animation: heartbeat 1.5s infinite,
+          floatingHeart 3s ease-in-out infinite;
+      }
+
+      @keyframes heartbeat {
+        0% {
+          transform: scale(1);
+          filter: brightness(1);
+        }
+        50% {
+          transform: scale(1.15);
+          filter: brightness(1.2);
+        }
+        100% {
+          transform: scale(1);
+          filter: brightness(1);
+        }
+      }
+
+      @keyframes floatingHeart {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-20px);
+        }
+      }
+
+      .heart:hover {
+        transform: scale(1.3) rotate(5deg);
+        text-shadow: 0 0 40px rgba(255, 0, 0, 1);
+      }
+
+      .broken {
+        animation: heartBreak 3s forwards;
+        filter: saturate(0.5);
+      }
+
+      @keyframes heartBreak {
+        0% {
+          transform: scale(1);
+          opacity: 1;
+        }
+        10% {
+          transform: scale(1.8) rotate(15deg);
+        }
+        20% {
+          transform: scale(1.6) rotate(-25deg);
+        }
+        30% {
+          transform: scale(1.7) rotate(25deg);
+        }
+        40% {
+          transform: scale(1.5) rotate(-20deg);
+        }
+        50% {
+          transform: scale(1.6);
+        }
+        60% {
+          transform: scale(1.4) rotate(15deg);
+        }
+        70% {
+          transform: scale(1.5) rotate(-15deg);
+        }
+        100% {
+          transform: scale(0.8);
+          opacity: 0.4;
+          filter: grayscale(100%) blur(4px) brightness(0.7);
+        }
+      }
+
+      .sad-bg {
+        background: linear-gradient(to bottom, #1a1a1a, #000000);
+        animation: darkening 4s forwards;
+      }
+
+      @keyframes darkening {
+        from {
+          filter: brightness(1);
+        }
+        to {
+          filter: brightness(0.5);
+        }
+      }
+
+      .rain-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 1;
+        overflow: hidden;
+      }
+
+      .rain-drop {
+        position: absolute;
+        width: 2px;
+        height: 15px;
+        background: linear-gradient(
+          to bottom,
+          transparent,
+          rgba(200, 200, 255, 0.8),
+          transparent
+        );
+        animation: rain linear infinite;
+      }
+
+      @keyframes rain {
+        0% {
+          transform: translateY(-100%);
+        }
+        100% {
+          transform: translateY(100vh);
+        }
+      }
+
+      .splash {
+        position: fixed;
+        bottom: 0;
+        width: 6px;
+        height: 2px;
+        background: rgba(255, 255, 255, 0.5);
+        border-radius: 50%;
+        animation: splash 0.5s linear forwards;
+      }
+
+      @keyframes splash {
+        0% {
+          transform: scale(1);
+          opacity: 0.7;
+        }
+        100% {
+          transform: scale(3);
+          opacity: 0;
+        }
+      }
+
+      .fog {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(
+          circle at 50% 50%,
+          rgba(255, 255, 255, 0.1),
+          rgba(0, 0, 0, 0.4)
+        );
+        pointer-events: none;
+        z-index: 1;
+        opacity: 0;
+        transition: opacity 3s;
+      }
+
+      .fog.show {
+        opacity: 0.7;
+      }
+
+      .lightning {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: white;
+        opacity: 0;
+        pointer-events: none;
+        z-index: 3;
+        filter: blur(5px);
+      }
+
+      .lightning-flash {
+        animation: lightning 1s ease-out;
+      }
+
+      @keyframes lightning {
+        0% {
+          opacity: 0;
+        }
+        10% {
+          opacity: 0.5;
+        }
+        15% {
+          opacity: 0.1;
+        }
+        20% {
+          opacity: 0.4;
+        }
+        25% {
+          opacity: 0;
+        }
+        30% {
+          opacity: 0.3;
+        }
+        100% {
+          opacity: 0;
+        }
+      }
+
+      .particles {
+        position: absolute;
+        width: 4px;
+        height: 4px;
+        background: rgba(255, 0, 0, 0.6);
+        border-radius: 50%;
+        pointer-events: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="heart-container">
+      <div class="heart" onclick="breakHeart()">❤️</div>
+    </div>
+    <div class="lightning"></div>
+    <div class="fog"></div>
+    <div class="rain-container"></div>
+
+    <audio id="sadSong">
+      <source src="sad.mp3" type="audio/mp3" />
+    </audio>
+
+    <script>
+      const heart = document.querySelector(".heart");
+      const audio = document.getElementById("sadSong");
+      const body = document.body;
+      let isHeartBroken = false;
+
+      // Preload audio dan set waktu awal
+      audio.load();
+      audio.currentTime = 41;
+
+      function createRainEffect(count) {
+        const container = document.querySelector(".rain-container");
+
+        // Bersihkan container terlebih dahulu
+        container.innerHTML = "";
+
+        // Buat tetesan hujan
+        for (let i = 0; i < count; i++) {
+          const drop = document.createElement("div");
+          drop.className = "rain-drop";
+
+          // Posisi random
+          drop.style.left = `${Math.random() * 100}%`;
+
+          // Kecepatan jatuh random
+          const duration = Math.random() * 0.5 + 0.7; // 0.7s to 1.2s
+          drop.style.animationDuration = `${duration}s`;
+
+          // Opacity random
+          drop.style.opacity = Math.random() * 0.3 + 0.2;
+
+          // Posisi awal random
+          drop.style.top = `${Math.random() * -100}%`;
+
+          // Tambahkan sedikit kemiringan
+          const angle = Math.random() * 3 + 2; // 2-5 derajat
+          drop.style.transform = `rotate(${angle}deg)`;
+
+          container.appendChild(drop);
+
+          // Daur ulang tetesan hujan
+          drop.addEventListener("animationend", () => {
+            // Reset posisi ke atas dengan posisi horizontal baru
+            drop.style.left = `${Math.random() * 100}%`;
+            drop.style.top = "-10px";
+
+            // Buat efek splash saat hujan mencapai bawah
+            createSplashAtPosition(parseFloat(drop.style.left));
+          });
+        }
+      }
+
+      function createSplashAtPosition(x) {
+        if (!isHeartBroken) return;
+
+        const splash = document.createElement("div");
+        splash.className = "splash";
+        splash.style.left = `${x}%`;
+        document.body.appendChild(splash);
+
+        // Hapus splash setelah animasi selesai
+        splash.addEventListener("animationend", () => splash.remove());
+      }
+
+      function createTimedLightningEffect() {
+        const lightning = document.querySelector(".lightning");
+
+        // Waktu kemunculan petir (dalam detik, relatif terhadap waktu mulai audio)
+        const lightningTimes = [44, 48, 52, 56]; // Sesuaikan dengan beat lagu
+
+        lightningTimes.forEach((time) => {
+          setTimeout(() => {
+            if (!isHeartBroken) return;
+
+            lightning.classList.add("lightning-flash");
+            setTimeout(() => {
+              lightning.classList.remove("lightning-flash");
+            }, 1000);
+          }, (time - 41) * 1000); // 41 adalah waktu mulai audio
+        });
+      }
+
+      function breakHeart() {
+        if (isHeartBroken) return;
+        isHeartBroken = true;
+
+        // Tambah efek partikel
+        createHeartParticles();
+
+        heart.textContent = "💔";
+        heart.classList.add("broken");
+        body.classList.add("sad-bg");
+        document.querySelector(".fog").classList.add("show");
+
+        // Tingkatkan jumlah tetesan hujan
+        createRainEffect(300); // Tambah jumlah tetesan
+
+        createTimedLightningEffect();
+        playEnhancedAudio();
+      }
+
+      function playEnhancedAudio() {
+        audio.currentTime = 41;
+        audio.volume = 0;
+
+        const fadeInDuration = 2000;
+        const startTime = Date.now();
+
+        const fadeIn = setInterval(() => {
+          const elapsed = Date.now() - startTime;
+          const progress = elapsed / fadeInDuration;
+
+          if (progress >= 1) {
+            audio.volume = 0.7;
+            clearInterval(fadeIn);
+          } else {
+            audio.volume = Math.pow(progress, 2) * 0.7;
+          }
+        }, 50);
+
+        audio
+          .play()
+          .catch((error) => console.log("Error playing audio:", error));
+      }
+
+      function createHeartParticles() {
+        const heartRect = heart.getBoundingClientRect();
+        const centerX = heartRect.left + heartRect.width / 2;
+        const centerY = heartRect.top + heartRect.height / 2;
+
+        for (let i = 0; i < 20; i++) {
+          const particle = document.createElement("div");
+          particle.className = "particles";
+          document.body.appendChild(particle);
+
+          const angle = Math.random() * Math.PI * 2;
+          const velocity = 5 + Math.random() * 5;
+          const startX = centerX;
+          const startY = centerY;
+
+          particle.style.left = startX + "px";
+          particle.style.top = startY + "px";
+
+          const animation = particle.animate(
+            [
+              { transform: "translate(0, 0)", opacity: 1 },
+              {
+                transform: `translate(${Math.cos(angle) * 200}px, ${
+                  Math.sin(angle) * 200
+                }px)`,
+                opacity: 0,
+              },
+            ],
+            {
+              duration: 1000 + Math.random() * 1000,
+              easing: "cubic-bezier(0.4, 0, 0.2, 1)",
+            }
+          );
+
+          animation.onfinish = () => particle.remove();
+        }
+      }
+    </script>
+  </body>
+</html>
