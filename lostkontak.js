@@ -78,17 +78,14 @@ document.getElementById("By").onclick = function () {
 
 var i = 1;
 function defwp() {
-  wallpaper.style =
-    "transform: scale(1); object-fit: cover; height: 100vh; width: 100%;";
+  wallpaper.style = "transform: scale(1)";
 }
 function kalimatakhir() {
   if (iden >= 1) {
     if (iden % 2 == 0) {
-      wallpaper.style =
-        "transform: scale(1); object-fit: cover; height: 100vh; width: 100%;";
+      wallpaper.style = "transform: scale(1)";
     } else {
-      wallpaper.style =
-        "transform: scale(1.5); object-fit: cover; height: 100vh; width: 100%;";
+      wallpaper.style = "transform: scale(1.5)";
     }
     wallpaper.src = iniwp[iden];
   }
@@ -201,15 +198,3 @@ function stopRain() {
   rain.innerHTML = "";
   rain.style.background = "none";
 }
-
-// Tambahkan event listener untuk mengatur ulang tinggi wallpaper saat orientasi berubah
-window.addEventListener("orientationchange", function () {
-  setTimeout(function () {
-    wallpaper.style.height = window.innerHeight + "px";
-  }, 200);
-});
-
-// Tambahkan event listener untuk resize
-window.addEventListener("resize", function () {
-  wallpaper.style.height = window.innerHeight + "px";
-});
